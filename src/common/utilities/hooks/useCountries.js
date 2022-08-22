@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { countriesClient } from '../helpers/getCountries';
-import axios from 'axios';
 
 export default function useCountries() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [query, setQuery] = useState('');
-  const [searchParam] = useState(['name']);
 
   const fetchCountries = () => {
     countriesClient()
@@ -28,19 +26,22 @@ export default function useCountries() {
   }, []);
 
   const searchCountries = (items) => {
-    return items?.filter((item) => {
-      return searchParam.some((newItem) => {
-        console.log(item);
-        return (
-          item[newItem].toString().toLowerCase().indexOf(query.toLowerCase()) >
-          -1
+    items.length > 0 &&
+      items.filter((item) => {
+        if (
+          item.name.common
+            .toString()
+            .toLowerCase()
+            .includes(query.toLowerCase())
         );
+        // setData(item);
+        // console.log(item);
+        return item;
       });
-    });
   };
 
   useEffect(() => {
-    searchCountries(Array.from(data));
+    searchCountries(data);
   }, [query]);
 
   return {

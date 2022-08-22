@@ -6,7 +6,7 @@ import FilterBar from '../common/components/home/Filterbar';
 import SearchBar from '../common/components/home/Searchbar';
 
 export default function Home() {
-  const { data, searchCountries } = useCountries();
+  const { data } = useCountries();
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Home() {
       <section className="container mx-auto mt-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {countries.length > 0 &&
-            searchCountries(countries).map((country, index) => (
+            countries.map((country, index) => (
               <CountryDisplay
                 key={index}
                 name={country.name.common}

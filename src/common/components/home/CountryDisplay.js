@@ -12,7 +12,7 @@ export default function CountryDisplay({
       <div>
         <Image src={flag} width="256px" height="140px" alt={name} />
       </div>
-      <div className="p-4">
+      <div className="p-4 dark:text-black">
         <p className="font-bold py-3">{name}</p>
         <p>
           <span className="font-bold">Population:</span> {population}
