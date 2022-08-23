@@ -6,12 +6,16 @@ import FilterBar from '../common/components/home/Filterbar';
 import SearchBar from '../common/components/home/Searchbar';
 
 export default function Home() {
-  const { data } = useCountries();
-  const [countries, setCountries] = useState([]);
+  const { query, data, filteredData } = useCountries();
+  const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
-    setCountries(data);
-  }, [data]);
+    setFilteredCountries(filteredData);
+  }, [filteredData]);
+
+  useEffect(() => {
+    console.log(filteredData);
+  }, [filteredCountries]);
 
   return (
     <div className="">
@@ -24,8 +28,19 @@ export default function Home() {
 
       <section className="container mx-auto mt-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {countries.length > 0 &&
-            countries.map((country, index) => (
+          {query.length > 0 &&
+            filteredCountries.map((country, index) => (
+              <CountryDisplay
+                key={index}
+                name={country.name.common}
+                population={country.population}
+                region={country.region}
+                capital={country.capital}
+                flag={country.flags.png}
+              />
+            ))}
+          {query.length == 0 &&
+            data.map((country, index) => (
               <CountryDisplay
                 key={index}
                 name={country.name.common}

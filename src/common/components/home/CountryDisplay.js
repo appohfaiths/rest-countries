@@ -10,7 +10,7 @@ export default function CountryDisplay({
   return (
     <div className="bg-white w-64 h-72">
       <div>
-        <Image src={flag} width="256px" height="140px" alt={name} />
+        {flag && <Image src={flag} width="256px" height="140px" alt={name} />}
       </div>
       <div className="p-4 dark:text-black">
         <p className="font-bold py-3">{name}</p>

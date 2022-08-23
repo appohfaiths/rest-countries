@@ -4,6 +4,7 @@ import { countriesClient } from '../helpers/getCountries';
 export default function useCountries() {
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
   const [query, setQuery] = useState('');
 
   const fetchCountries = () => {
@@ -25,32 +26,28 @@ export default function useCountries() {
     fetchCountries();
   }, []);
 
-  const searchCountries = (items) => {
-    items.length > 0 &&
-      items.filter((item) => {
-        if (
-          item.name.common
-            .toString()
-            .toLowerCase()
-            .includes(query.toLowerCase())
-        );
-        // setData(item);
-        // console.log(item);
-        return item;
+  const searchCountries = (searchValue) => {
+    // setQuery(searchValue);
+    if (query !== '') {
+      const filteredData = data.filter((item) => {
+        return Object.values(item)
+          .join('')
+          .toLowerCase()
+          .includes(query.toLowerCase());
       });
+
+      setFilteredData(filteredData);
+    }
   };
 
-  useEffect(() => {
-    searchCountries(data);
-  }, [query]);
-
   return {
-    fetchCountries,
     data,
     setData,
     isLoaded,
     query,
     setQuery,
     searchCountries,
+    filteredData,
+    setFilteredData,
   };
 }
