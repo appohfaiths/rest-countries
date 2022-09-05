@@ -4,7 +4,8 @@ import { countriesClient } from '../helpers/getCountries';
 export default function useCountries() {
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [filterParam, setFilterParam] = useState(['All']);
   const [query, setQuery] = useState('');
 
   const fetchCountries = () => {
@@ -27,7 +28,7 @@ export default function useCountries() {
   }, []);
 
   const searchCountries = (searchValue) => {
-    // setQuery(searchValue);
+    setQuery(searchValue);
     if (query !== '') {
       const filteredData = data.filter((item) => {
         return Object.values(item)
@@ -35,8 +36,11 @@ export default function useCountries() {
           .toLowerCase()
           .includes(query.toLowerCase());
       });
-
-      setFilteredData(filteredData);
+      setFilteredResults(filteredData);
+      console.log(filteredResults);
+    } else {
+      setFilteredResults(data);
+      console.log(filteredResults);
     }
   };
 
@@ -47,7 +51,9 @@ export default function useCountries() {
     query,
     setQuery,
     searchCountries,
-    filteredData,
-    setFilteredData,
+    filteredResults,
+    setFilteredResults,
+    filterParam,
+    setFilterParam,
   };
 }

@@ -6,50 +6,44 @@ import FilterBar from '../common/components/home/Filterbar';
 import SearchBar from '../common/components/home/Searchbar';
 
 export default function Home() {
-  const { query, data, filteredData } = useCountries();
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const { query, data, filteredResults } = useCountries();
 
   useEffect(() => {
-    setFilteredCountries(filteredData);
-  }, [filteredData]);
-
-  useEffect(() => {
-    console.log(filteredData);
-  }, [filteredCountries]);
+    console.log(filteredResults);
+  }, [filteredResults]);
 
   return (
     <div className="">
       <Navbar />
 
-      <section className="container mx-auto mt-8 flex items-center justify-between">
+      <section className="container mx-auto mt-8 flex flex-col gap-4 md:flex-row items-center justify-between">
         <SearchBar />
         <FilterBar />
       </section>
 
       <section className="container mx-auto mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {query.length > 0 &&
-            filteredCountries.map((country, index) => (
-              <CountryDisplay
-                key={index}
-                name={country.name.common}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-                flag={country.flags.png}
-              />
-            ))}
-          {query.length == 0 &&
-            data.map((country, index) => (
-              <CountryDisplay
-                key={index}
-                name={country.name.common}
-                population={country.population}
-                region={country.region}
-                capital={country.capital}
-                flag={country.flags.png}
-              />
-            ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 justify-items-center">
+          {query.length > 1
+            ? filteredResults.map((country, index) => (
+                <CountryDisplay
+                  key={index}
+                  name={country.name.common}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                  flag={country.flags.png}
+                />
+              ))
+            : data.map((country, index) => (
+                <CountryDisplay
+                  key={index}
+                  name={country.name.common}
+                  population={country.population}
+                  region={country.region}
+                  capital={country.capital}
+                  flag={country.flags.png}
+                />
+              ))}
         </div>
       </section>
     </div>
