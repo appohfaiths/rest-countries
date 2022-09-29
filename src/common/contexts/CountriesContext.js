@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
-import { countriesClient } from '../helpers/getCountries';
+import { useState, useEffect, createContext, useContext } from 'react';
+import { countriesClient } from '../utilities/helpers/getCountries';
 
-export default function useCountries() {
+export const CountriesContext = createContext({});
+
+export default function CountriesContextProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [filteredResults, setFilteredResults] = useState([]);
@@ -44,16 +46,24 @@ export default function useCountries() {
     }
   };
 
-  return {
-    data,
-    setData,
-    isLoaded,
-    query,
-    setQuery,
-    searchCountries,
-    filteredResults,
-    setFilteredResults,
-    filterParam,
-    setFilterParam,
-  };
+  return (
+    <CountriesContext.Provider
+      value={{
+        data,
+        setData,
+        isLoaded,
+        query,
+        setQuery,
+        searchCountries,
+        filteredResults,
+        setFilteredResults,
+        filterParam,
+        setFilterParam,
+      }}
+    >
+      {children}
+    </CountriesContext.Provider>
+  );
 }
+
+export const useCountries = () => useContext(CountriesContext);

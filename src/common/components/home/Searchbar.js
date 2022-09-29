@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import useCountries from '../../utilities/hooks/useCountries';
+import { useCountries } from '../../contexts/CountriesContext';
 
 export default function SearchBar() {
   const { query, setQuery, searchCountries } = useCountries();

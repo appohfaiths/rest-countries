@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useCountries from '../common/utilities/hooks/useCountries';
+import { useCountries } from '../common/contexts/CountriesContext';
 import Navbar from '../common/components/shared/Navbar';
 import CountryDisplay from '../common/components/home/CountryDisplay';
 import FilterBar from '../common/components/home/Filterbar';
